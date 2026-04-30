@@ -1,1 +1,1 @@
-*proyecto notificador actividad evaluativa #&
+*proyecto notificador actividad evaluativa 6#

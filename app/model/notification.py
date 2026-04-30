@@ -94,3 +94,13 @@ class NotificationService:
             except NotificationError:
                 pass
         return delivered_count
+    def get_history(self) -> list[str]:
+        return list(self._history)
+    def generate_report(self, attempted: int) -> DeliveryReport:
+        return DeliveryReport(
+            channel_name=self._channel.get_channel_name(),
+            attempted_messages=attempted,
+            delivered_count=len(self._history),
+            # Enviamos una copia del historial para mantener la inmutabilidad
+            delivered_messages=self.get_history()
+        )
