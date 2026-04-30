@@ -101,6 +101,5 @@ class NotificationService:
             channel_name=self._channel.get_channel_name(),
             attempted_messages=attempted,
             delivered_count=len(self._history),
-            # Enviamos una copia del historial para mantener la inmutabilidad
             delivered_messages=self.get_history()
         )
