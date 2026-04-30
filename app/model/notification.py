@@ -1,6 +1,13 @@
-import os
-from dataclasses import dataclass, field
-from datetime import datetime
-from typing import Protocol, runtime_checkable
+# app/model/notification.py
 
-from app.services.util import generate_unique_id
+import os
+import sys
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+#1 Excepciones personalizadas
+class NotificationError(Exception):
+    pass
+class ChannelUnavailableError(NotificationError):
+    pass
+class DeliveryError(NotificationError):
+    pass
