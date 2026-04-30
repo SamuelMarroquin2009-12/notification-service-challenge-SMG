@@ -63,3 +63,15 @@ class MockChannel(NotificationChannel):
     def send(self, message: str) -> None:
         # Se lanza directamente como indica el requerimiento
         raise ChannelUnavailableError("MockChannel nunca está disponible.")
+#PARTE2:Propuesta de Clase Adicional
+@dataclass(frozen=True)
+class DeliveryReport:
+    channel_name: str
+    attempted_messages: int
+    delivered_count: int
+    delivered_messages: list[str]
+    @property
+    def success_rate(self) -> float:
+        if self.attempted_messages == 0:
+            return 0.0
+        return (self.delivered_count / self.attempted_messages) * 100.0
