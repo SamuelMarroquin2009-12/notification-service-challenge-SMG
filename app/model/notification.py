@@ -75,3 +75,22 @@ class DeliveryReport:
         if self.attempted_messages == 0:
             return 0.0
         return (self.delivered_count / self.attempted_messages) * 100.0
+#4 Clase NotificationService
+class NotificationService:
+    def __init__(self, channel: NotificationChannel):
+        self._channel = channel
+        self._history: list[str] = []
+    def send_notification(self, message: str) -> None:
+        if not self._channel.is_available():
+            raise ChannelUnavailableError(f"El canal '{self._channel.get_channel_name()}' no está disponible.")
+        self._channel.send(message)
+        self._history.append(message)
+    def send_bulk(self, messages: list[str]) -> int:
+        delivered_count = 0
+        for msg in messages:
+            try:
+                self.send_notification(msg)
+                delivered_count += 1
+            except NotificationError:
+                pass
+        return delivered_count
