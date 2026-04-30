@@ -1,17 +1,15 @@
-# app/model/notification.py
-
 import os
 import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-#1 Excepciones personalizadas
+#1Excepciones personalizadas
 class NotificationError(Exception):
     pass
 class ChannelUnavailableError(NotificationError):
     pass
 class DeliveryError(NotificationError):
     pass
-#2 Abstracción NotificationChannel (Opción B)
+#2Abstracción NotificationChannel(B)
 class NotificationChannel(ABC):
     @abstractmethod
     def send(self, message: str) -> None:
@@ -22,7 +20,7 @@ class NotificationChannel(ABC):
     @abstractmethod
     def is_available(self) -> bool:
         pass
-# 3 Implementaciones de la abstracción
+#3Implementaciones de la abstracción
 class ConsoleChannel(NotificationChannel):
     def is_available(self) -> bool:
         return True
@@ -56,10 +54,8 @@ class FileChannel(NotificationChannel):
 class MockChannel(NotificationChannel):
     def is_available(self) -> bool:
         return False
-
     def get_channel_name(self) -> str:
         return "mock"
-
     def send(self, message: str) -> None:
         # Se lanza directamente como indica el requerimiento
         raise ChannelUnavailableError("MockChannel nunca está disponible.")
