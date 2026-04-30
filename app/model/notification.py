@@ -35,3 +35,21 @@ class ConsoleChannel(NotificationChannel):
             print(message, file=sys.stdout)
         except OSError as e:
             raise DeliveryError(f"Error de I/O en consola: {e}")
+class FileChannel(NotificationChannel):
+    def __init__(self, file_path: str):
+        self.file_path = file_path
+    def is_available(self) -> bool:
+        if os.path.exists(self.file_path):
+            return os.access(self.file_path, os.W_OK)
+        parent_dir = os.path.dirname(self.file_path) or "."
+        return os.path.exists(parent_dir) and os.access(parent_dir, os.W_OK)
+    def get_channel_name(self) -> str:
+        return f"file:{self.file_path}"
+    def send(self, message: str) -> None:
+        if not self.is_available():
+            raise ChannelUnavailableError(f"No hay permisos o el directorio no existe para: {self.file_path}")
+        try:
+            with open(self.file_path, "a", encoding="utf-8") as f:
+                f.write(message + "\n")
+        except OSError as e:
+            raise DeliveryError(f"Fallo al escribir en el archivo: {e}")
