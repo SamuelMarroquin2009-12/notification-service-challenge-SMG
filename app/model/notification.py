@@ -11,3 +11,14 @@ class ChannelUnavailableError(NotificationError):
     pass
 class DeliveryError(NotificationError):
     pass
+#2 Abstracción NotificationChannel (Opción B)
+class NotificationChannel(ABC):
+    @abstractmethod
+    def send(self, message: str) -> None:
+        pass
+    @abstractmethod
+    def get_channel_name(self) -> str:
+        pass
+    @abstractmethod
+    def is_available(self) -> bool:
+        pass
