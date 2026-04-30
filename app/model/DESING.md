@@ -1,1 +1,4 @@
-*proyecto notificador actividad evaluativa 6#
+# DESIGN.md - Sistema de Notificaciones y Reportes
+## 1. Abstracción del Canal de Notificación
+Se ha optado por implementar la abstracción `NotificationChannel` utilizando la clase abstracta `ABC` del módulo `abc` (Tipado Nominal). La decisión se justifica en que un sistema de notificaciones de nivel empresarial se beneficia de contratos estrictos en tiempo de desarrollo e importación. Obligar a las clases a heredar de la base asegura que la jerarquía esté claramente definida y que Python rechace tempranamente la instanciación de cualquier canal mal implementado, reduciendo errores silenciosos.
+## 2. Diseño e Integración de DeliveryReport
