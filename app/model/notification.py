@@ -53,3 +53,13 @@ class FileChannel(NotificationChannel):
                 f.write(message + "\n")
         except OSError as e:
             raise DeliveryError(f"Fallo al escribir en el archivo: {e}")
+class MockChannel(NotificationChannel):
+    def is_available(self) -> bool:
+        return False
+
+    def get_channel_name(self) -> str:
+        return "mock"
+
+    def send(self, message: str) -> None:
+        # Se lanza directamente como indica el requerimiento
+        raise ChannelUnavailableError("MockChannel nunca está disponible.")
